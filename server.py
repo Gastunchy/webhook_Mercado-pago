@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route("/webhook", methods=["POST"])
+@app.route("/webhook", methods=["GET", "POST"])
 def webhook():
     data = request.get_json()
-    print("Datos recibidos:", data)  # Ver en los logs
+    print("Datos recibidos:", data)
     return jsonify({"status": "received"}), 200
 
 if __name__ == "__main__":
