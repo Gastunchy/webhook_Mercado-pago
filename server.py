@@ -10,17 +10,23 @@ def webhook():
         # Obtener los datos de la solicitud JSON
         data = request.get_json()
 
+        # También obtener parámetros de la URL si es necesario
+        query_params = request.args.to_dict()
+
         # Mostrar los datos en la web de manera legible
         return render_template_string("""
             <html>
                 <body>
                     <h1>Datos recibidos del Webhook</h1>
+                    <h2>Datos en el cuerpo de la solicitud:</h2>
                     <pre>{{ data }}</pre>
+                    <h2>Parámetros de la URL:</h2>
+                    <pre>{{ query_params }}</pre>
                     <h2>Datos formateados:</h2>
                     <pre>{{ formatted_data }}</pre>
                 </body>
             </html>
-        """, data=json.dumps(data, indent=4), formatted_data=data)
+        """, data=json.dumps(data, indent=4), formatted_data=data, query_params=query_params)
 
     return "Método no permitido", 405
 
