@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, render_template_string
+import json
 
 app = Flask(__name__)
 
@@ -9,15 +10,17 @@ def webhook():
         # Obtener los datos de la solicitud JSON
         data = request.get_json()
 
-        # Mostrar los datos en la web
+        # Mostrar los datos en la web de manera legible
         return render_template_string("""
             <html>
                 <body>
                     <h1>Datos recibidos del Webhook</h1>
                     <pre>{{ data }}</pre>
+                    <h2>Datos formateados:</h2>
+                    <pre>{{ formatted_data }}</pre>
                 </body>
             </html>
-        """, data=data)  # Renderiza los datos como JSON en la página
+        """, data=json.dumps(data, indent=4), formatted_data=data)
 
     return "Método no permitido", 405
 
